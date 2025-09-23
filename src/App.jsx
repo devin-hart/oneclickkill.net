@@ -13,11 +13,11 @@ function Home() {
           nearly three decades later.
         </p>
         <p>
-          <strong>OneClickKill</strong> brings that legacy back with a true
+          <strong>one[click]kill</strong> brings that legacy back with a true
           Instagib Rail experience: raw reflex, razor aim, one shot, one frag.
         </p>
         <p>
-          Welcome to <strong>OneClickKill.</strong>
+          Welcome to <strong>one[click]kill.</strong>
         </p>
         <p>Contact <a href="mailto:devohart@gmail.com">d2</a>.</p>
       </>
