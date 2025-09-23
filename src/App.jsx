@@ -1,11 +1,12 @@
 import { Routes, Route, Link } from "react-router-dom";
 import ockLogo from "./assets/ock-logo.webp";
 
-
 function Home() {
   return (
     <div className="page">
-      <h1><img src={ockLogo} alt="OneClickKill Logo" /></h1>
+            <h1>
+                <img src={ockLogo} alt="OneClickKill Logo" className="logo" />
+            </h1>
       <>
         <p>
           Released in 1999, <em>Quake III Arena</em> set the standard for pure
@@ -19,7 +20,9 @@ function Home() {
         <p>
           Welcome to <strong>one[click]kill.</strong>
         </p>
-        <p>Contact <a href="mailto:devohart@gmail.com">d2</a>.</p>
+        <p>
+          Contact <a href="mailto:devohart@gmail.com">d2</a>.
+        </p>
       </>
     </div>
   );
@@ -37,10 +40,10 @@ function About() {
 export default function App() {
   return (
     <div>
-      <nav>
-        {/* <Link to="/">Home</Link> | <Link to="/about">About</Link> */}
+      {/* <nav>
+        <Link to="/">Home</Link> | <Link to="/about">About</Link>
 
-      </nav>
+      </nav> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

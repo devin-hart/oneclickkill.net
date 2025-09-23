@@ -32,7 +32,20 @@ nav a {
   justify-content: center;
 }
 
+.logo {
+    img {
+        width: 100%;
+    }
+}
+
 p, h1, h2, h3, a {
   text-shadow: 1px 1px 2px black;
 }
 
+h1 {
+    margin: 0;
+}
+
+p {
+    margin-top: 0;
+}
