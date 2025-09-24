@@ -1,5 +1,1 @@
-{
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "http://api.oneclickkill.net/$1" }
-  ]
-}
+{ "rewrites": [ { "source": "/api/(.*)", "destination": "http://108.2.192.9/$1" } ] }
