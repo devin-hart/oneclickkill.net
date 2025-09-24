@@ -32,9 +32,8 @@ nav a {
 }
 
 .logo {
-    img {
-        width: 100%;
-    }
+    display: block;
+    width: 100%;
 }
 
 p, h1, h2, h3, a {
