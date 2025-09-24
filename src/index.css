@@ -26,10 +26,9 @@ nav a {
   padding: 2rem;
   margin: 0 auto;
   max-width: 500px;
-  height: 80vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding-bottom: 3rem;
 }
 
 .logo {

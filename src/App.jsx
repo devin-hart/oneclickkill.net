@@ -1,5 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import ockLogo from "./assets/ock-logo.webp";
+import Dashboard from './components/Dashboard.jsx';
 
 function Home() {
   return (
@@ -20,6 +21,7 @@ function Home() {
         <p>
           Welcome to <strong>one[click]kill.</strong>
         </p>
+        <Dashboard />
         <p>
           Contact <a href="mailto:devohart@gmail.com">d2</a>.
         </p>
