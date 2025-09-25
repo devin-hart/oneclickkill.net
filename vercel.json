@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/ock/:path*", "destination": "http://api.oneclickkill.net:8080/:path*" }
+  ]
+}

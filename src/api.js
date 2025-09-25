@@ -1,9 +1,7 @@
 // src/api.js
 // const BASE = process.env.NEXT_PUBLIC_API_BASE || '';
-const BASE =
-  (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost'))
-    ? 'http://api.oneclickkill.net:8080' // dev (http page → http API = ok)
-    : process.env.NEXT_PUBLIC_API_BASE; 
+const BASE = process.env.NEXT_PUBLIC_API_BASE || '/ock';
+
 const bust = () => Date.now();
 
 export const getSummary = () =>
