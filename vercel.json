@@ -1,6 +1,0 @@
-// {
-//     "rewrites": [{
-//         "source": "/api/(.*)",
-//         "destination": "http://api.oneclickkill.net:8080/api/$1"
-//     }]
-// }
