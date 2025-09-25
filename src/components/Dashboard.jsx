@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getSummary, getLadder, getMatches } from '../api';
+import { getSummary, getLadder } from '../api';
+// import { getSummary, getLadder, getMatches } from '../api'; will use later when matches becomes relevant
 
 export default function Dashboard() {
   const [summary, setSummary] = useState(null);
