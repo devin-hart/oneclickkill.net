@@ -15,7 +15,7 @@ export default function Dashboard() {
         const [s, l, m] = await Promise.all([
           getSummary(),
           getLadder(),
-          getMatches(5),
+        //   getMatches(5),
         ]);
         setSummary(s);
         setLadder(l);
