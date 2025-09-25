@@ -1,5 +1,9 @@
 // src/api.js
-const BASE = process.env.NEXT_PUBLIC_API_BASE || '';
+// const BASE = process.env.NEXT_PUBLIC_API_BASE || '';
+const BASE =
+  (typeof window !== 'undefined' && window.location.origin.startsWith('http://localhost'))
+    ? 'http://api.oneclickkill.net:8080' // dev (http page → http API = ok)
+    : process.env.NEXT_PUBLIC_API_BASE; 
 const bust = () => Date.now();
 
 export const getSummary = () =>
@@ -8,5 +12,5 @@ export const getSummary = () =>
 export const getLadder = () =>
   fetch(`${BASE}/api/ladder?_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());
 
-export const getMatches = (limit=5) =>
-  fetch(`${BASE}/api/matches?limit=${limit}&_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());
+// export const getMatches = (limit=5) =>
+//   fetch(`${BASE}/api/matches?limit=${limit}&_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());

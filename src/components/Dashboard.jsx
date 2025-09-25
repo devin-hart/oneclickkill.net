@@ -67,7 +67,7 @@ export default function Dashboard() {
         ) : <div>…</div>}
       </section>
 
-      <section>
+      {/* <section>
         <h2>Recent Matches</h2>
         {matches?.matches?.length ? (
           <ul>
@@ -76,7 +76,7 @@ export default function Dashboard() {
             ))}
           </ul>
         ) : <div>…</div>}
-      </section>
+      </section> */}
     </div>
   );
 }
