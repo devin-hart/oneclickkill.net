@@ -58,10 +58,10 @@ export default function Dashboard() {
       </section>
 
       <section>
-        <h2>Ladder (top 5)</h2>
+        <h2>Ladder (top 25)</h2>
         {ladder?.players?.length ? (
           <ol>
-            {ladder.players.slice(0, 5).map(p => (
+            {ladder.players.slice(0, 25).map(p => (
               <li key={p.name}>{p.name} — {p.kills}/{p.deaths} (KD {p.kd})</li>
             ))}
           </ol>

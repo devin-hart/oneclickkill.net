@@ -1,6 +1,19 @@
-// src/api.js
-// const BASE = process.env.NEXT_PUBLIC_API_BASE || '';
-const BASE = process.env.NEXT_PUBLIC_API_BASE || '/ock';
+// api.js (or wherever BASE lives)
+const isBrowser = typeof window !== 'undefined';
+const fromEnv =
+  (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE)
+    ? process.env.NEXT_PUBLIC_API_BASE
+    : undefined;
+
+// In the browser:
+//  - on localhost dev, talk directly to your http API
+//  - otherwise use the Vercel rewrite prefix (/ock)
+export const BASE = isBrowser
+  ? (window.location.origin.startsWith('http://localhost')
+      ? 'http://api.oneclickkill.net:8080'
+      : '/ock')
+  // On the server (Node only), allow env override, else fallback
+  : (fromEnv || 'http://api.oneclickkill.net:8080');
 
 const bust = () => Date.now();
 
