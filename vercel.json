@@ -1,5 +1,6 @@
 {
-  "rewrites": [
-    { "source": "/ock/:path*", "destination": "http://api.oneclickkill.net:8080/:path*" }
-  ]
+    "rewrites": [{
+        "source": "/api/(.*)",
+        "destination": "http://api.oneclickkill.net:8080/api/$1"
+    }]
 }

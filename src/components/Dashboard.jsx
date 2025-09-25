@@ -4,7 +4,7 @@ import { getSummary, getLadder, getMatches } from '../api';
 export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [ladder, setLadder] = useState(null);
-  const [matches, setMatches] = useState(null);
+//   const [matches, setMatches] = useState(null);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Dashboard() {
         ]);
         setSummary(s);
         setLadder(l);
-        setMatches(m);
+        // setMatches(m);
         setErr('');
       } catch (e) {
         setErr(e.message || 'error');
