@@ -25,3 +25,14 @@ export const getLadder = () =>
 
 // export const getMatches = (limit=5) =>
 //   fetch(`${BASE}/api/matches?limit=${limit}&_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());
+
+export async function getPlayerBy(by, { days = 7, limitPairs = 10 } = {}) {
+  const url = `${BASE}/api/player?by=${encodeURIComponent(by)}&days=${days}&limitPairs=${limitPairs}`;
+  const r = await fetch(url, { headers: { 'cache-control': 'no-cache' } });
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({}));
+    throw new Error(err.error || `Lookup failed (${r.status})`);
+  }
+  const json = await r.json();
+  return json.player;
+}

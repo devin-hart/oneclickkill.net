@@ -1,3 +1,12 @@
+:root {
+  --bg: #0b0f17; /* page bg */
+  --panel: #0f1420; /* card bg */
+  --panel-border: #1f2937; /* card border */
+  --muted: #94a3b8; /* subtle text */
+  --fg: #e5e7eb; /* text */
+  --accent: #cbd5e1; /* lines/spark */
+}
+
 html,
 body,
 #root {
@@ -189,3 +198,125 @@ table.q3 {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.ock-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--fg);
+  padding: 8px 10px;
+  width: 100%;
+}
+.ock-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 8px 12px;
+  cursor: pointer;
+  color: white;
+}
+
+/* layout helpers */
+.flex-row {
+  display: flex;
+}
+.space-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.mb-12 {
+  margin-bottom: 12px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mb-6 {
+  margin-bottom: 6px;
+}
+.mb-4 {
+  margin-bottom: 4px;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.gap-12 {
+  gap: 12px;
+}
+.gap-8 {
+  gap: 8px;
+}
+
+/* typography helpers */
+.title-lg {
+  font-size: 24px;
+  font-weight: 700;
+}
+.value-lg {
+  font-size: 18px;
+}
+.section-title {
+  font-weight: 600;
+}
+.label-sm {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.ock-btn:hover {
+  border-color: #334155;
+}
+.ock-chip {
+  font-size: 12px;
+  border: 1px solid var(--panel-border);
+  padding: 2px 6px;
+}
+.ock-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.ock-modal {
+  width: min(1000px, 96vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(6px);
+  border: 1px solid var(--panel-border);
+  padding: 16px;
+}
+.ock-modal-sub {
+  color: var(--muted);
+  font-size: 12px;
+}
+.ock-card {
+  border: 1px solid var(--panel-border);
+  padding: 10px;
+}
+.ock-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.ock-spark {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  gap: 4px;
+  align-items: end;
+  height: 60px;
+}
+.ock-spark > div {
+  background: var(--accent);
+}
+
+/* sparkline uses .ock-spark from earlier */
