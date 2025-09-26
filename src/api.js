@@ -18,7 +18,7 @@ export const BASE = isBrowser
 const bust = () => Date.now();
 
 export const getSummary = () =>
-  fetch(`${BASE}/api/summary?_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());
+  fetch(`${BASE}/api/snapshot?_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());
 
 export const getLadder = () =>
   fetch(`${BASE}/api/ladder?_=${bust()}`, { cache: 'no-store' }).then(r=>r.json());

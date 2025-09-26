@@ -53,6 +53,11 @@ const Q3Name = ({ value, className }) => {
     </span>
   );
 };
+
+// pick the first available field the API might send
+const bestName = p =>
+  p?.colored ?? p?.name_colored ?? p?.name ?? 'UnnamedPlayer';
+
 /* ---------- /Q3 color rendering ---------- */
 
 const fmtTime = ts => ts ? new Date(ts).toLocaleTimeString() : '—';
@@ -89,7 +94,7 @@ export default function Dashboard() {
   const players = summary?.current_match?.players || summary?.current_match?.top5 || [];
 
   const matchColumns = [
-    { header: "Player", render: (p) => <Q3Name value={p.colored || p.name} /> },
+    { header: "Player", render: (p) => <Q3Name value={bestName(p)} />},
     { header: "Kills", key: "kills", align: "right" },
     { header: "Deaths", key: "deaths", align: "right" },
     {
@@ -110,20 +115,14 @@ export default function Dashboard() {
     .slice(0, 25)
     .map((p, i) => ({ ...p, rank: i + 1 }));
 
-    const ladderColumns = [
-      { header: "Rank", key: "rank", align: "right" },
-      {
-        header: "Player",
-        render: (p) => <Q3Name value={p.name_colored || p.name} />,
-      },
-      { header: "Kills", key: "kills", align: "right" },
-      { header: "Deaths", key: "deaths", align: "right" },
-      {
-        header: "KDR",
-        render: (p) => (typeof p.kd === "number" ? p.kd.toFixed(2) : p.kd),
-        align: "right",
-      },
-    ];
+const ladderColumns = [
+  { key: 'rank', header: 'Rank', align: 'right' },
+  { header: 'Player', render: (row) => <Q3Name value={bestName(row)} /> },
+  { key: 'kills', header: 'Kills', align: 'right' },
+  { key: 'deaths', header: 'Deaths', align: 'right' },
+  { key: 'kd', header: 'KDR', align: 'right' },
+];
+
 
   return (
     <div>
