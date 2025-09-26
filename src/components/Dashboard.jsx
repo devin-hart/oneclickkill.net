@@ -65,19 +65,18 @@ const bestName = p =>
 const fmtTime = ts => ts ? new Date(ts).toLocaleTimeString() : '—';
 
 export default function Dashboard() {
-    const [summary, setSummary] = useState(null);
-    const [ladder, setLadder] = useState(null);
-    const [err, setErr] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [refreshing, setRefreshing] = useState(false);
-    const [lastUpdated, setLastUpdated] = useState(null);
-    const [playerModalOpen, setPlayerModalOpen] = useState(false);
-    const [playerData, setPlayerData] = useState(null);
-    const [playerErr, setPlayerErr] = useState("");
-    const [playerLoading, setPlayerLoading] = useState(false);
-    const [playerRefreshedAt, setPlayerRefreshedAt] = useState(0);
-    const pollRef = useRef(null);
-
+  const [summary, setSummary] = useState(null);
+  const [ladder, setLadder] = useState(null);
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [playerModalOpen, setPlayerModalOpen] = useState(false);
+  const [playerData, setPlayerData] = useState(null);
+  const [playerErr, setPlayerErr] = useState("");
+  const [playerLoading, setPlayerLoading] = useState(false);
+  const [playerRefreshedAt, setPlayerRefreshedAt] = useState(0);
+  const pollRef = useRef(null);
 
   useEffect(() => {
     let timer;
@@ -85,11 +84,12 @@ export default function Dashboard() {
       try {
         if (!first) setRefreshing(true);
         const [s, l] = await Promise.all([getSummary(), getLadder()]);
-        setSummary(s); setLadder(l);
-        setErr('');
+        setSummary(s);
+        setLadder(l);
+        setErr("");
         setLastUpdated(Date.now());
       } catch (e) {
-        setErr(e.message || 'Failed to load');
+        setErr(e.message || "Failed to load");
       } finally {
         setLoading(false);
         setRefreshing(false);
@@ -100,10 +100,48 @@ export default function Dashboard() {
     return () => clearInterval(timer);
   }, []);
 
-  const players = summary?.current_match?.players || summary?.current_match?.top5 || [];
+  // open player modal by name (colors ok)
+  const openPlayer = async (name) => {
+    try {
+      setPlayerErr("");
+      setPlayerLoading(true);
+      const p = await getPlayerBy(name, { days: 7, limitPairs: 10 });
+      setPlayerData(p);
+      setPlayerModalOpen(true);
+      setPlayerRefreshedAt(Date.now());
+      clearInterval(pollRef.current);
+      pollRef.current = setInterval(async () => {
+        try {
+          const np = await getPlayerBy(name, { days: 7, limitPairs: 10 });
+          setPlayerData(np);
+          setPlayerRefreshedAt(Date.now());
+        } catch {}
+      }, 12000);
+    } catch (e) {
+      setPlayerErr(e.message || "Player not found");
+      setPlayerModalOpen(true);
+      setPlayerData(null);
+    } finally {
+      setPlayerLoading(false);
+    }
+  };
+
+  const players =
+    summary?.current_match?.players || summary?.current_match?.top5 || [];
 
   const matchColumns = [
-    { header: "Player", render: (p) => <Q3Name value={bestName(p)} />},
+    {
+      header: "Player",
+      render: (p) => (
+        <a
+          onClick={() => openPlayer(bestName(p))}
+          className="linklike"
+          title="View player"
+        >
+          <Q3Name value={bestName(p)} />
+        </a>
+      ),
+    },
     { header: "Kills", key: "kills", align: "right" },
     { header: "Deaths", key: "deaths", align: "right" },
     {
@@ -112,7 +150,6 @@ export default function Dashboard() {
       align: "right",
     },
   ];
-
   const ladderRows = (ladder?.players || [])
     .slice()
     .sort(
@@ -124,14 +161,24 @@ export default function Dashboard() {
     .slice(0, 25)
     .map((p, i) => ({ ...p, rank: i + 1 }));
 
-const ladderColumns = [
-  { key: 'rank', header: 'Rank', align: 'right' },
-  { header: 'Player', render: (row) => <Q3Name value={bestName(row)} /> },
-  { key: 'kills', header: 'Kills', align: 'right' },
-  { key: 'deaths', header: 'Deaths', align: 'right' },
-  { key: 'kd', header: 'KDR', align: 'right' },
-];
-
+  const ladderColumns = [
+    { key: "rank", header: "Rank", align: "right" },
+    {
+      header: "Player",
+      render: (row) => (
+        <a
+          onClick={() => openPlayer(bestName(row))}
+          className="linklike"
+          title="View player"
+        >
+          <Q3Name value={bestName(row)} />
+        </a>
+      ),
+    },
+    { key: "kills", header: "Kills", align: "right" },
+    { key: "deaths", header: "Deaths", align: "right" },
+    { key: "kd", header: "KDR", align: "right" },
+  ];
 
   return (
     <div>

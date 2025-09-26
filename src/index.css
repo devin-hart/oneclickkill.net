@@ -40,6 +40,7 @@ nav a {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
   padding-bottom: 3rem;
 }
 
@@ -328,3 +329,8 @@ table.q3 {
 }
 
 /* sparkline uses .ock-spark from earlier */
+.linklike {
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
