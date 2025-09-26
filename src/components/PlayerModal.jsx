@@ -1,5 +1,5 @@
 // PlayerModal.jsx
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Q3Table from "./Q3Table";
 import Q3Name from "./Q3Name";
 
@@ -14,16 +14,58 @@ export default function PlayerModal({ open, onClose, player, refreshedAt }) {
   const nem = player?.nemesis || { most_killed: [], killed_by: [], bots: { most_killed: [], killed_by: [] } };
   const fmt = (ms) => (ms ? new Date(ms).toLocaleString() : "—");
 
-  const Sparkline = ({ data }) => {
-    const max = Math.max(1, ...data.map(d => d.c));
-    return (
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(24, 1fr)", gap: 4, alignItems: "end", height: 60 }}>
-        {data.map((d, i) => (
-          <div key={i} title={`${new Date(d.t).getHours()}:00 — ${d.c}`} style={{ height: `${(d.c / max) * 100}%`, background: "var(--fg, #cbd5e1)" }} />
-        ))}
-      </div>
-    );
-  };
+const Sparkline = ({ data = [] }) => {
+  const max = Math.max(1, ...data.map(d => d.c));
+  const W = 560, H = 80, pad = 10;
+  const barW = (W - pad * 2) / 24 - 2;
+
+  const [tip, setTip] = useState(null); // {x,y,text}
+  const hourLabel = (ms) => `${String(new Date(ms).getHours()).padStart(2, "0")}:00`;
+
+  return (
+    <div className="ock-spark-wrap">
+      <svg viewBox={`0 0 ${W} ${H}`} className="ock-spark-svg" role="img" aria-label="Last 24h activity">
+        {[0,6,12,18,24].map((i) => {
+          const x = pad + (i / 24) * (W - pad * 2);
+          return (
+            <g key={i}>
+              <line x1={x} x2={x} y1={H - 22} y2={H - 20} className="ock-spark-tick" />
+              <text x={x} y={H - 6} textAnchor="middle" className="ock-spark-label">{i}</text>
+            </g>
+          );
+        })}
+        {data.map((d, i) => {
+          const h = Math.round(((d.c || 0) / max) * (H - 28));
+          const x = pad + i * ((W - pad * 2) / 24);
+          const y = H - 28 - h;
+          return (
+            <rect
+              key={i}
+              x={x} y={y} width={barW} height={h}
+              className="ock-spark-bar"
+              onMouseEnter={(e) =>
+                setTip({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY, text: `${hourLabel(d.t)} — ${d.c} frags` })
+              }
+              onMouseLeave={() => setTip(null)}
+            />
+          );
+        })}
+        {(() => {
+          const avg = data.length ? data.reduce((a,b)=>a+(b.c||0),0)/data.length : 0;
+          const y = H - 28 - ((avg / max) * (H - 28));
+          return <line x1={pad} x2={W - pad} y1={y} y2={y} className="ock-spark-avg" />;
+        })()}
+      </svg>
+
+      {tip && (
+        <div className="ock-spark-tip" style={{ left: tip.x + 8, top: tip.y - 28 }}>
+          {tip.text}
+        </div>
+      )}
+    </div>
+  );
+};
+
 
   const cols = [
     { key: 'name', header: 'Name', render: (r) => <Q3Name name={r.name} /> },
