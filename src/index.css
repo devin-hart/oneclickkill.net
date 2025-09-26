@@ -60,8 +60,16 @@ h1 {
   margin: 0;
 }
 
+h2 {
+    font-size: 18px;
+}
+
 p {
   margin-top: 0;
+}
+
+th, td, span, p, a  {
+    font-size: 12px;
 }
 
 /* keep your .layout rule that pins footer; add these */
