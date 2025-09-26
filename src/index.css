@@ -142,3 +142,50 @@ table.q3 {
     display: none;
   }
 }
+
+/* relies on your global .q3-card styles; only unique bits here */
+.q3-info {
+  padding: 14px 16px;
+}
+.q3-info-head {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.q3-info-head strong {
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+}
+.q3-info-head small {
+  opacity: 0.7;
+}
+
+.q3-info-grid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.q3-stat {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+}
+
+.q3-stat .label {
+  display: block;
+  opacity: 0.7;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+.q3-stat .value {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .q3-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

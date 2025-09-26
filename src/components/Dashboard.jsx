@@ -2,6 +2,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { getSummary, getLadder } from '../api';
 import Q3Table from './Q3Table';
+import ServerCard from './ServerCard';
 
 /* ---------- tiny skeleton styles ---------- */
 const skeletonCSS = `
@@ -160,14 +161,13 @@ export default function Dashboard() {
         </div>
       ) : (
         <>
-          <div>
-            <div><strong>{summary?.live?.hostname || 'OneClickKill'}</strong></div>
-            <div>Map: {summary?.live?.mapname || summary?.current_match?.map || 'unknown'}</div>
-            <div>
-              Players: {summary?.live?.player_count ??
-                        (summary?.current_match?.players?.length ?? 0)}
-            </div>
-          </div>
+            <ServerCard
+                hostname={summary?.live?.hostname || 'OneClickKill.net'}
+                map={summary?.live?.mapname || summary?.current_match?.map || 'unknown'}
+                players={summary?.live?.player_count ?? (summary?.current_match?.players?.length ?? 0)}
+                updatedAt={lastUpdated}
+                source={summary?.source === 'udp' ? 'Live' : 'Log'}
+            />
 
           {players.length ? (
             <Q3Table columns={matchColumns} rows={players} />
@@ -175,7 +175,7 @@ export default function Dashboard() {
             <div style={{ opacity:0.8, marginTop:8 }}>No match yet.</div>
           )}
 
-          <section style={{ marginTop: 24 }}>
+          <section style={{ marginTop: 24, marginBottom: 24 }}>
             <h2>Ladder (top 25)</h2>
             {ladder?.players?.length ? (
                 <Q3Table columns={ladderColumns} rows={ladderRows} />
