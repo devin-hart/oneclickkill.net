@@ -1,4 +1,6 @@
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -9,7 +11,7 @@ body {
   font-family: Arial, sans-serif;
   color: #f2f2f2;
   background: url("/src/assets/skull-bg.webp") no-repeat center center fixed;
-  background-color: black;  /* fills rest of screen */
+  background-color: black; /* fills rest of screen */
 }
 
 nav {
@@ -26,24 +28,117 @@ nav a {
   padding: 2rem;
   margin: 0 auto;
   max-width: 500px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding-bottom: 3rem;
 }
 
 .logo {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
-p, h1, h2, h3, a {
+p,
+h1,
+h2,
+h3,
+a {
   text-shadow: 1px 1px 2px black;
 }
 
 h1 {
-    margin: 0;
+  margin: 0;
 }
 
 p {
-    margin-top: 0;
+  margin-top: 0;
+}
+
+/* keep your .layout rule that pins footer; add these */
+.site-footer {
+  margin-top: auto; /* stays at bottom */
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap; /* wraps nicely on mobile */
+  gap: 0; /* separators handle spacing */
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  display: flex;
+  align-items: center;
+}
+
+/* pipe separator with even spacing */
+.footer-links li + li::before {
+  content: "|";
+  opacity: 0.55;
+  margin: 0 12px; /* adjust spacing around pipes */
+}
+
+.footer-links a {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.9;
+}
+
+.footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Table */
+
+.q3-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+.q3-scroll {
+  overflow-x: auto;
+}
+table.q3 {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.q3 th,
+.q3 td {
+  padding: 10px 12px;
+}
+.q3 thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  text-align: left;
+  font-weight: 600;
+  color: #ddd;
+}
+.q3 tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.02);
+}
+.q3 tbody tr:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+.q3 td.num,
+.q3 th.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 640px) {
+  .q3 th.hide-sm,
+  .q3 td.hide-sm {
+    display: none;
+  }
 }
