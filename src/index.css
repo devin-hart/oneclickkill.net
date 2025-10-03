@@ -16,6 +16,7 @@ body{
 }
 p,h1,h2,h3,a{ text-shadow:1px 1px 2px #000 }
 h1{ margin:0 } 
+h1 img { display: block; width: 100%;}
 h2{ font-size:18px }
 p{ margin-top:0 }
 
@@ -53,9 +54,9 @@ nav a{ color:#f2f2f2; margin-right:1rem; text-decoration:none }
 .q3-scroll{ overflow-x:auto }
 table.q3{ width:100%; border-collapse:separate; border-spacing:0 }
 .q3 th,.q3 td{ padding:10px 12px }
+.q3 thead tr { background:rgba(255,255,255,.05); backdrop-filter:blur(6px); }
 .q3 thead th{
   position:sticky; top:0;
-  background:rgba(255,255,255,.05); backdrop-filter:blur(6px);
   text-align:left; font-weight:600; color:#ddd;
 }
 .q3 tbody tr:nth-child(odd){ background:rgba(255,255,255,.02) }
