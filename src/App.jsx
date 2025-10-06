@@ -24,6 +24,7 @@ function Home() {
         <Dashboard />
         <footer className="site-footer">
             <ul className="footer-links">
+                <li><a href="https://discord.gg/JAm7RM7unX">[discord]</a></li>
                 <li><a href="mailto:devohart@gmail.com">[contact]</a></li>
                 <li><a href="https://www.devinh.art" target="_blank" rel="noopener noreferrer">[portfolio]</a></li>
                 <li><a href="https://www.excessiveplus.net/" target="_blank" rel="noopener noreferrer">[excessive+]</a></li>
