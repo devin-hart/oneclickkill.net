@@ -20,6 +20,8 @@ h1 img { display: block; width: 100%;}
 h2{ font-size:18px }
 p{ margin-top:0 }
 
+a {color: rgb(105, 101, 187) !important; }
+
 /* Optional global size (kept from original) */
 th,td,span,p,a{ font-size:12px }
 

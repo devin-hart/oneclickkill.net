@@ -19,14 +19,14 @@ function Home() {
           Instagib Rail experience: raw reflex, razor aim, one shot, one frag.
         </p>
         <p>
-          Welcome to <strong>one[click]kill.</strong>
+          Welcome to <strong>one[click]kill.</strong> <a href="https://discord.gg/JAm7RM7unX">[discord]</a>
         </p>
         <Dashboard />
         <footer className="site-footer">
             <ul className="footer-links">
-                <li><a href="mailto:devohart@gmail.com">contact</a></li>
-                <li><a href="https://www.devinh.art" target="_blank" rel="noopener noreferrer">portfolio</a></li>
-                <li><a href="https://www.excessiveplus.net/" target="_blank" rel="noopener noreferrer">excessive +</a></li>
+                <li><a href="mailto:devohart@gmail.com">[contact]</a></li>
+                <li><a href="https://www.devinh.art" target="_blank" rel="noopener noreferrer">[portfolio]</a></li>
+                <li><a href="https://www.excessiveplus.net/" target="_blank" rel="noopener noreferrer">[excessive+]</a></li>
             </ul>
         </footer>
       </>
