@@ -265,7 +265,7 @@ export default function Dashboard() {
               0
             }
             updatedAt={lastUpdated}
-            source={summary?.source === "udp" ? "Live" : "Log"}
+            source={summary?.source === "udp" ? "Live" : "Down"}
           />
 
           {players.length ? (

@@ -20,7 +20,7 @@ export default function ServerCard({
           <span className="value">{players}</span>
         </div>
         <div className="q3-stat">
-          <span className="label">Source</span>
+          <span className="label">Status</span>
           <span className="value">{source}</span>
         </div>
       </div>
