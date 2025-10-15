@@ -2,23 +2,11 @@
 import { useEffect, useState } from "react";
 import Q3Table from "./Q3Table";
 import Q3Name from "./Q3Name";
-import { bestPlayerName } from "../utils/q3";
 
 export default function PlayerModal({ open, onClose, player, refreshedAt }) {
-  useEffect(() => {
-    if (!open) {
-      return undefined;
-    }
-    const esc = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", esc);
-    return () => document.removeEventListener("keydown", esc);
-  }, [open, onClose]);
-
   if (!open) return null;
+  const esc = (e) => e.key === "Escape" && onClose();
+  useEffect(() => { document.addEventListener("keydown", esc); return () => document.removeEventListener("keydown", esc); }, []);
 
   const t = player?.totals || {};
   const rail = t.rail || { kills: 0, deaths: 0 };
@@ -80,7 +68,7 @@ const Sparkline = ({ data = [] }) => {
 
 
   const cols = [
-    { key: 'name', header: 'Name', render: (r) => <Q3Name value={bestPlayerName(r)} /> },
+    { key: 'name', header: 'Name', render: (r) => <Q3Name name={r.name} /> },
     { key: 'count', header: 'Count', align: 'right' },
   ];
 
@@ -90,7 +78,7 @@ const Sparkline = ({ data = [] }) => {
     <div className="flex-row space-between align-center mb-12">
       <div>
         <div className="title-lg">
-          <Q3Name value={bestPlayerName(player, "")} />{" "}
+          <Q3Name name={player?.name || ""} />{" "}
           {player?.is_bot ? <span className="ock-chip">Bot</span> : null}
         </div>
         <div className="ock-modal-sub">
