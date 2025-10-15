@@ -1,10 +1,8 @@
 // api.js (or wherever BASE lives)
 const isBrowser = typeof window !== 'undefined';
 const fromEnv =
-  typeof globalThis !== 'undefined' &&
-  typeof globalThis.process !== 'undefined' &&
-  globalThis.process?.env?.NEXT_PUBLIC_API_BASE
-    ? globalThis.process.env.NEXT_PUBLIC_API_BASE
+  (typeof process !== 'undefined' && process.env && process.env.NEXT_PUBLIC_API_BASE)
+    ? process.env.NEXT_PUBLIC_API_BASE
     : undefined;
 
 // In the browser:
