@@ -1,10 +1,12 @@
 // Dashboard.jsx
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getSummary, getLadder, getPlayerBy } from '../api';
+import { bestPlayerName } from '../utils/q3';
 import Q3Table from './Q3Table';
 import ServerCard from './ServerCard';
 import PlayerSearch from "./PlayerSearch";
 import PlayerModal from "./PlayerModal";
+import Q3Name from "./Q3Name";
 
 /* ---------- tiny skeleton styles ---------- */
 const skeletonCSS = `
@@ -14,53 +16,6 @@ const skeletonCSS = `
 `;
 const Skeleton = ({ w='100%', h=14, style }) =>
   <div className="q3-skel" style={{ width: w, height: h, ...style }} />;
-
-/* ---------- Q3 color rendering ---------- */
-const Q3_COLORS = {
-  '0': '#000000','1': '#ff0000','2': '#00ff00','3': '#ffff00',
-  '4': '#0000ff','5': '#00ffff','6': '#ff00ff','7': '#ffffff',
-  '8': '#ffa500','9': '#999999',
-};
-const parseQ3Colored = (s = '', defaultColor = '#ffffff') => {
-  let color = defaultColor, out = [], buf = '';
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === '^' && i + 1 < s.length) {
-      if ((s[i+1] === 'x' || s[i+1] === 'X') && i + 7 < s.length) {
-        const hex = s.slice(i+2, i+8);
-        if (/^[0-9a-fA-F]{6}$/.test(hex)) {
-          if (buf) { out.push({ text: buf, color }); buf = ''; }
-          color = `#${hex}`; i += 7; continue;
-        }
-      }
-      if (/[0-9]/.test(s[i+1])) {
-        if (buf) { out.push({ text: buf, color }); buf = ''; }
-        color = Q3_COLORS[s[i+1]] ?? color; i += 1; continue;
-      }
-    }
-    buf += s[i];
-  }
-  if (buf) out.push({ text: buf, color });
-  return out;
-};
-const stripQ3Colors = (s = '') =>
-  s.replace(/\^[0-9]/g, '').replace(/\^x[0-9a-fA-F]{6}/g, '');
-
-const Q3Name = ({ value, className }) => {
-  const segs  = useMemo(() => parseQ3Colored(value), [value]);
-  const plain = useMemo(() => stripQ3Colors(value), [value]);
-  if (!segs.length) return <span className={className}>{value}</span>;
-  return (
-    <span className={className} title={plain}>
-      {segs.map((seg, i) => <span key={i} style={{ color: seg.color }}>{seg.text}</span>)}
-    </span>
-  );
-};
-
-// pick the first available field the API might send
-const bestName = p =>
-  p?.colored ?? p?.name_colored ?? p?.name ?? 'UnnamedPlayer';
-
-/* ---------- /Q3 color rendering ---------- */
 
 const fmtTime = ts => ts ? new Date(ts).toLocaleTimeString() : '—';
 
@@ -115,7 +70,9 @@ export default function Dashboard() {
           const np = await getPlayerBy(name, { days: 7, limitPairs: 10 });
           setPlayerData(np);
           setPlayerRefreshedAt(Date.now());
-        } catch {}
+        } catch (intervalErr) {
+          console.warn("Failed to refresh player data", intervalErr);
+        }
       }, 12000);
     } catch (e) {
       setPlayerErr(e.message || "Player not found");
@@ -134,11 +91,11 @@ export default function Dashboard() {
       header: "Player",
       render: (p) => (
         <a
-          onClick={() => openPlayer(bestName(p))}
+          onClick={() => openPlayer(bestPlayerName(p))}
           className="linklike"
           title="View player"
         >
-          <Q3Name value={bestName(p)} />
+          <Q3Name value={bestPlayerName(p)} />
         </a>
       ),
     },
@@ -167,11 +124,11 @@ export default function Dashboard() {
       header: "Player",
       render: (row) => (
         <a
-          onClick={() => openPlayer(bestName(row))}
+          onClick={() => openPlayer(bestPlayerName(row))}
           className="linklike"
           title="View player"
         >
-          <Q3Name value={bestName(row)} />
+          <Q3Name value={bestPlayerName(row)} />
         </a>
       ),
     },
@@ -184,6 +141,7 @@ export default function Dashboard() {
     <div>
       <div style={{ marginBottom: 12 }}>
         <PlayerSearch
+          loading={playerLoading}
           onSubmit={async (name) => {
             try {
               setPlayerErr("");
@@ -202,7 +160,9 @@ export default function Dashboard() {
                   });
                   setPlayerData(np);
                   setPlayerRefreshedAt(Date.now());
-                } catch {}
+                } catch (intervalErr) {
+                  console.warn("Failed to refresh player data", intervalErr);
+                }
               }, 12000);
             } catch (e) {
               setPlayerErr(e.message || "Player not found");
