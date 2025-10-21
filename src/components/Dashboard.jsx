@@ -105,14 +105,14 @@ export default function Dashboard() {
     try {
       setPlayerErr("");
       setPlayerLoading(true);
-      const p = await getPlayerBy(name, { days: 7, limitPairs: 10 });
+      const p = await getPlayerBy(name, { days: 365, limitPairs: 10 });
       setPlayerData(p);
       setPlayerModalOpen(true);
       setPlayerRefreshedAt(Date.now());
       clearInterval(pollRef.current);
       pollRef.current = setInterval(async () => {
         try {
-          const np = await getPlayerBy(name, { days: 7, limitPairs: 10 });
+          const np = await getPlayerBy(name, { days: 365, limitPairs: 10 });
           setPlayerData(np);
           setPlayerRefreshedAt(Date.now());
         } catch {}
@@ -188,7 +188,7 @@ export default function Dashboard() {
             try {
               setPlayerErr("");
               setPlayerLoading(true);
-              const p = await getPlayerBy(name, { days: 7, limitPairs: 10 });
+              const p = await getPlayerBy(name, { days: 365, limitPairs: 10 });
               setPlayerData(p);
               setPlayerModalOpen(true);
               setPlayerRefreshedAt(Date.now());
@@ -197,7 +197,7 @@ export default function Dashboard() {
               pollRef.current = setInterval(async () => {
                 try {
                   const np = await getPlayerBy(name, {
-                    days: 7,
+                    days: 365,
                     limitPairs: 10,
                   });
                   setPlayerData(np);
